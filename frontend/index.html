@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow — Cloud Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-decoration">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="grid-pattern"></div>
+    </div>
+
+    <!-- ============== AUTH SCREEN ============== -->
+    <div id="auth-screen" class="auth-screen">
+        <div class="auth-container">
+            <div class="auth-brand">
+                <div class="logo-mark">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <rect x="4" y="4" width="14" height="14" rx="3" fill="#FF6B6B"/>
+                        <rect x="22" y="4" width="14" height="14" rx="3" fill="#4ECDC4"/>
+                        <rect x="4" y="22" width="14" height="14" rx="3" fill="#FFE66D"/>
+                        <rect x="22" y="22" width="14" height="14" rx="3" fill="#A78BFA"/>
+                    </svg>
+                </div>
+                <h1>TaskFlow</h1>
+                <p class="tagline">Organize your work in the cloud ☁️</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="signin">Sign In</button>
+                <button class="tab-btn" data-tab="signup">Sign Up</button>
+                <button class="tab-btn" data-tab="confirm">Verify</button>
+            </div>
+
+            <!-- Sign In -->
+            <form id="signin-form" class="auth-form active">
+                <div class="form-field">
+                    <label>Email</label>
+                    <input type="email" id="signin-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <input type="password" id="signin-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <span>Sign In</span>
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+            </form>
+
+            <!-- Sign Up -->
+            <form id="signup-form" class="auth-form">
+                <div class="form-field">
+                    <label>Full Name</label>
+                    <input type="text" id="signup-name" placeholder="Ada Lovelace" required>
+                </div>
+                <div class="form-field">
+                    <label>Email</label>
+                    <input type="email" id="signup-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <input type="password" id="signup-password" placeholder="At least 8 characters" required minlength="8">
+                </div>
+                <button type="submit" class="btn-primary">
+                    <span>Create Account</span>
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+            </form>
+
+            <!-- Confirm -->
+            <form id="confirm-form" class="auth-form">
+                <p class="form-hint">Enter the verification code sent to your email.</p>
+                <div class="form-field">
+                    <label>Email</label>
+                    <input type="email" id="confirm-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-field">
+                    <label>Verification Code</label>
+                    <input type="text" id="confirm-code" placeholder="123456" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <span>Verify Account</span>
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </form>
+
+            <div id="auth-message" class="auth-message"></div>
+        </div>
+
+        <div class="auth-footer">
+            <p>Built on <span class="aws-badge">AWS</span> · Cognito · Lambda · API Gateway · RDS · DynamoDB · S3 · SQS</p>
+        </div>
+    </div>
+
+    <!-- ============== APP DASHBOARD ============== -->
+    <div id="app-screen" class="app-screen hidden">
+        <header class="topbar">
+            <div class="topbar-left">
+                <div class="logo-mark small">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <rect x="4" y="4" width="14" height="14" rx="3" fill="#FF6B6B"/>
+                        <rect x="22" y="4" width="14" height="14" rx="3" fill="#4ECDC4"/>
+                        <rect x="4" y="22" width="14" height="14" rx="3" fill="#FFE66D"/>
+                        <rect x="22" y="22" width="14" height="14" rx="3" fill="#A78BFA"/>
+                    </svg>
+                </div>
+                <h2>TaskFlow</h2>
+            </div>
+            <div class="topbar-right">
+                <div class="user-chip">
+                    <div class="avatar" id="user-avatar">U</div>
+                    <span id="user-name">User</span>
+                </div>
+                <button class="btn-ghost" id="logout-btn">
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M13 5l-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h7l1-1M9 10h9m0 0l-3-3m3 3l-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <!-- Stats Row -->
+            <section class="stats-row">
+                <div class="stat-card stat-pink">
+                    <div class="stat-label">Total Tasks</div>
+                    <div class="stat-value" id="stat-total">0</div>
+                    <div class="stat-icon">📋</div>
+                </div>
+                <div class="stat-card stat-yellow">
+                    <div class="stat-label">In Progress</div>
+                    <div class="stat-value" id="stat-progress">0</div>
+                    <div class="stat-icon">⚡</div>
+                </div>
+                <div class="stat-card stat-teal">
+                    <div class="stat-label">Completed</div>
+                    <div class="stat-value" id="stat-done">0</div>
+                    <div class="stat-icon">✅</div>
+                </div>
+                <div class="stat-card stat-purple">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value" id="stat-pending">0</div>
+                    <div class="stat-icon">⏳</div>
+                </div>
+            </section>
+
+            <!-- Action bar -->
+            <section class="action-bar">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="in_progress">In Progress</button>
+                    <button class="filter-btn" data-filter="completed">Done</button>
+                </div>
+                <button class="btn-primary" id="new-task-btn">
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12m-6-6h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span>New Task</span>
+                </button>
+            </section>
+
+            <!-- Tasks -->
+            <section class="tasks-grid" id="tasks-container">
+                <div class="empty-state">
+                    <div class="empty-illustration">🎯</div>
+                    <h3>No tasks yet</h3>
+                    <p>Click "New Task" to create your first one</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ============== TASK MODAL ============== -->
+    <div id="task-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">New Task</h3>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <form id="task-form" class="task-form">
+                <input type="hidden" id="task-id">
+                <div class="form-field">
+                    <label>Title</label>
+                    <input type="text" id="task-title" placeholder="e.g., Deploy to production" required>
+                </div>
+                <div class="form-field">
+                    <label>Description</label>
+                    <textarea id="task-desc" rows="3" placeholder="Add details..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Status</label>
+                        <select id="task-status">
+                            <option value="pending">Pending</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Priority</label>
+                        <select id="task-priority">
+                            <option value="low">🟢 Low</option>
+                            <option value="medium" selected>🟡 Medium</option>
+                            <option value="high">🔴 High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label>Due Date</label>
+                    <input type="date" id="task-due">
+                </div>
+                <div class="form-field">
+                    <label>Attachment (S3)</label>
+                    <div class="file-upload">
+                        <input type="file" id="task-file">
+                        <label for="task-file" class="file-upload-label">
+                            <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12m-6-6h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            <span id="file-label-text">Choose file</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-ghost" id="cancel-task-btn">Cancel</button>
+                    <button type="submit" class="btn-primary">
+                        <span id="task-submit-text">Create Task</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.3.7/dist/amazon-cognito-identity.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Dependencies for the task_handler Lambda
+# Install into a `python/` folder for a Lambda layer, or include in deployment .zip
+#
+#   pip install -r requirements.txt -t package/
+#
+# boto3 is already provided by the Lambda runtime — listed for local dev only.
+
+boto3>=1.28.0
+PyMySQL>=1.1.0
